@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 5 - Ideation Process</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #020408;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --accent-orange: #f97316;
+            --accent-gold: #f59e0b;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- FIXED BACKGROUND --- */
+        .fixed-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        h2 { 
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            text-align: center;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--text-muted);
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* --- COMPACT TEAM BAR --- */
+        .team-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .team-member {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .team-member span { color: var(--accent-blue); font-weight: 700; }
+        .separator { width: 1px; height: 15px; background: rgba(255,255,255,0.2); }
+
+        /* --- CONTENT CARDS --- */
+        .content-card {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .showcase-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- SCAMPER GRID --- */
+        .scamper-base {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .scamper-base h3 { color: var(--accent-blue); font-size: 1.2rem; margin-bottom: 10px; }
+        .base-list { list-style: none; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .base-list li { background: rgba(0,0,0,0.3); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; }
+
+        .scamper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .scamper-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .scamper-item:hover { background: rgba(255,255,255,0.06); transform: translateY(-3px); }
+        .letter { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 10px; display: block; }
+        .scamper-content ul { list-style: none; padding-left: 0; }
+        .scamper-content li { position: relative; padding-left: 15px; margin-bottom: 8px; font-size: 0.95rem; color: #cbd5e1; line-height: 1.4; }
+        .scamper-content li::before { content: '•'; position: absolute; left: 0; color: var(--accent-blue); }
+
+        /* --- 30 IDEAS GRID --- */
+        .ideas-category { margin-bottom: 40px; }
+        .cat-title {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .idea-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            transition: all 0.2s ease;
+        }
+        .idea-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+
+        .idea-num {
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            min-width: 25px;
+        }
+        .idea-content h4 { font-size: 1rem; color: #fff; margin-bottom: 4px; text-transform: none; letter-spacing: 0; font-weight: 600; }
+        .idea-content p { color: #94a3b8; font-size: 0.85rem; margin: 0; text-align: left; max-width: 100%; }
+
+        /* --- FINAL CONCEPT BOX --- */
+        .concept-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 60px 40px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+        }
+        .concept-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: #ffffff;
+            font-weight: 700;
+            max-width: 90%;
+            z-index: 2;
+        }
+        
+        /* --- NAVIGATION DOTS --- */
+        .nav-dots {
+            position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 100;
+        }
+        .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.2); border-radius: 50%; cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: var(--accent-blue); transform: scale(1.3); box-shadow: 0 0 10px var(--accent-blue); }
+
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem; }
+            .nav-dots { display: none; }
+            .team-bar { flex-direction: column; align-items: center; border-radius: 20px; text-align: center; }
+            .separator { display: none; }
+            section { padding: 60px 15px; margin-bottom: 50px; }
+            .concept-text { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-bg"></div>
+
+    <div class="nav-dots">
+        <div class="dot active" onclick="scrollToSection(0)"></div>
+        <div class="dot" onclick="scrollToSection(1)"></div>
+        <div class="dot" onclick="scrollToSection(2)"></div>
+        <div class="dot" onclick="scrollToSection(3)"></div>
+        <div class="dot" onclick="scrollToSection(4)"></div>
+        <div class="dot" onclick="scrollToSection(5)"></div>
+        <div class="dot" onclick="scrollToSection(6)"></div>
+    </div>
+
+    <section id="sec-brainstorm">
+        <div class="team-bar">
+            <div class="team-member">Group 05</div>
+            <div class="separator"></div>
+            <div class="team-member">Nakshatra Rane <span>73</span></div>
+            <div class="separator"></div>
+            <div class="team-member">Nachiket Shewale <span>127</span></div>
+            <div class="separator"></div>
+            <div class="team-member">Prathamesh Pawar <span>99</span></div>
+            <div class="separator"></div>
+            <div class="team-member">Abhishek Bhatode <span>117</span></div>
+            <div class="separator"></div>
+            <div class="team-member">Shreyas Deshmukh <span>128</span></div>
+        </div>
+
+        <h2>Ideation & Brainstorming</h2>
+        <p>A structured breakdown of features for Navigation, Checkout, and Product Discovery.</p>
+        
+        <div class="content-card">
+            <img src="PHOTOS/ideation.png" alt="Brainstorming Map" class="showcase-img">
+        </div>
+    </section>
+
+    <section id="sec-scamper">
+        <h2>SCAMPER Analysis</h2>
+        <p>Refining our base concepts by challenging them through seven different lenses.</p>
+
+        <div class="content-card">
+            <div class="scamper-base">
+                <h3>Base Ideas Selected</h3>
+                <ul class="base-list">
+                    <li>Scan for details & usage</li>
+                    <li>In-app comparison tool</li>
+                    <li>Short product demo videos</li>
+                </ul>
+            </div>
+            <div class="scamper-grid">
+                <div class="scamper-item"><span class="letter">S</span><div class="scamper-content"><strong>Substitute</strong><ul><li>Substitute text with visuals.</li><li>Self-scan instead of staff.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">C</span><div class="scamper-content"><strong>Combine</strong><ul><li>Scan + Compare + Video.</li><li>Reviews + Usage.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">A</span><div class="scamper-content"><strong>Adapt</strong><ul><li>E-commerce style pages.</li><li>Beginner-friendly demos.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">M</span><div class="scamper-content"><strong>Modify</strong><ul><li>Expert vs Beginner modes.</li><li>10s Quick videos.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">P</span><div class="scamper-content"><strong>Put to use</strong><ul><li>Save for online buy.</li><li>Staff training tool.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">E</span><div class="scamper-content"><strong>Eliminate</strong><ul><li>Aisle searching.</li><li>Packaging confusion.</li></ul></div></div>
+                <div class="scamper-item"><span class="letter">R</span><div class="scamper-content"><strong>Reverse</strong><ul><li>Scan first, decide later.</li><li>Clarity before trial.</li></ul></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-ideas">
+        <h2>The 30 Ideas</h2>
+        <p>Comprehensive list of features generated across key retail touchpoints.</p>
+
+        <div class="content-card">
+            <div class="ideas-category">
+                <span class="cat-title">🧭 Navigation & Wayfinding</span>
+                <div class="ideas-grid">
+                    <div class="idea-card"><div class="idea-num">01</div><div class="idea-content"><h4>In-store GPS App</h4><p>Shows shortest path to products.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">02</div><div class="idea-content"><h4>Smart Store Map</h4><p>Live location tracking.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">03</div><div class="idea-content"><h4>Voice Search</h4><p>User asks direction, app guides them.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">04</div><div class="idea-content"><h4>QR Aisle Finder</h4><p>Scan board to open aisle location.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">05</div><div class="idea-content"><h4>Personalized Layout</h4><p>Map rearranges based on list.</p></div></div>
+                </div>
+            </div>
+            
+            <div class="ideas-category">
+                <span class="cat-title">🏷 Product Understanding</span>
+                <div class="ideas-grid">
+                    <div class="idea-card"><div class="idea-num">06</div><div class="idea-content"><h4>Scan for Details</h4><p>Shows reviews, videos, use cases.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">07</div><div class="idea-content"><h4>AI Recommendation</h4><p>Suggests products based on budget.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">08</div><div class="idea-content"><h4>Compare Tool</h4><p>Side-by-side comparison of 2 items.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">09</div><div class="idea-content"><h4>Beginner/Expert Mode</h4><p>Toggle technical details on/off.</p></div></div>
+                    <div class="idea-card"><div class="idea-num">10</div><div class="idea-content"><h4>Video Demos</h4><p>Short explainers inside the app.</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-concept">
+        <h2>Final Concept</h2>
+        <p>The consolidated solution derived from our ideation and SCAMPER analysis.</p>
+
+        <div class="content-card">
+            <div class="concept-box">
+                <p class="concept-text">
+                    "A scan-based in-store app feature that helps customers understand, compare, and decide on products through simplified information and short demo videos."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-ia">
+        <h2>Information Architecture</h2>
+        <p>Structuring the flow of information to ensure a seamless user journey.</p>
+        
+        <div class="content-card">
+            <img src="PHOTOS/ia.png" alt="Information Architecture" class="showcase-img">
+        </div>
+    </section>
+
+    <section id="sec-userflow">
+        <h2>User Flow Diagram</h2>
+        <p>Mapping the step-by-step path a user takes to complete a task.</p>
+        
+        <div class="content-card">
+            <img src="PHOTOS/user_flow.png" alt="User Flow Diagram" class="showcase-img">
+        </div>
+    </section>
+
+    <section id="sec-lofi">
+        <h2>Low Fidelity Screens</h2>
+        <p>Initial wireframes focusing on layout, hierarchy, and basic functionality.</p>
+        
+        <div class="content-card">
+            <img src="PHOTOS/lofi.png" alt="Low Fidelity Screens" class="showcase-img">
+        </div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.dot');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const index = Array.from(sections).indexOf(entry.target);
+                    updateDots(index);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        function updateDots(activeIndex) {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        function scrollToSection(index) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
